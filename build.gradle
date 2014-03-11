@@ -1,0 +1,32 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+
+// tag::repositories[]
+def localMavenRepo = 'file://' + new File(System.getProperty('user.home'), '.m2/repository').absolutePath
+repositories {
+    mavenCentral()
+    mavenRepo url: localMavenRepo
+}
+// end::repositories[]
+
+// tag::jar[]
+jar {
+    baseName = 'commons-configuration-appengine'
+    version =  '1.0-SNAPSHOT'
+}
+// end::jar[]
+
+// tag::dependencies[]
+dependencies {
+    compile "commons-configuration:commons-configuration:1.10"
+    compile "com.google.appengine:appengine-api-1.0-sdk:1.9.0"
+    compile "javax.inject:javax.inject:1"
+
+}
+// end::dependencies[]
+
+// tag::wrapper[]
+task wrapper(type: Wrapper) {
+    gradleVersion = '1.11'
+}
+// end::wrapper[]
