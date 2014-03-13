@@ -1,6 +1,10 @@
 apply plugin: 'java'
 apply plugin: 'eclipse'
+apply plugin: 'maven'
 
+version =  '1.1-SNAPSHOT'
+group = 'org.talesolutions'
+	
 // tag::repositories[]
 def localMavenRepo = 'file://' + new File(System.getProperty('user.home'), '.m2/repository').absolutePath
 repositories {
@@ -12,7 +16,6 @@ repositories {
 // tag::jar[]
 jar {
     baseName = 'commons-configuration-appengine'
-    version =  '1.0-SNAPSHOT'
 }
 // end::jar[]
 
@@ -36,3 +39,12 @@ task wrapper(type: Wrapper) {
     gradleVersion = '1.11'
 }
 // end::wrapper[]
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            repository(url: "file://localhost/home/fabio/Development/eclipse-workspaces/oss/talesolutions-mvn-repo/releases")
+            snapshotRepository(url: "file://localhost/home/fabio/Development/eclipse-workspaces/oss/talesolutions-mvn-repo/snapshots")
+        }
+    }
+}
