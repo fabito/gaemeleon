@@ -1,4 +1,4 @@
-package org.apache.commons.configuration.appengine;
+package org.talesolutions.commons.configuration.appengine;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
@@ -11,6 +11,7 @@ import java.util.Map.Entry;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.talesolutions.commons.configuration.appengine.DatastoreConfiguration;
 
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;

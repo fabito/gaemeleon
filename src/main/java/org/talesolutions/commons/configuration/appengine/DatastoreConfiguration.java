@@ -1,4 +1,4 @@
-package org.apache.commons.configuration.appengine;
+package org.talesolutions.commons.configuration.appengine;
 
 import java.util.Iterator;
 import java.util.LinkedList;
