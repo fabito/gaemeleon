@@ -31,7 +31,16 @@ Maven settings
 
 Gradle Settings
 ===============
-
-org.github.fabito:commons-configuration-appengine:1.1
+```groovy
+repositories {
+    mavenCentral()
+    mavenRepo url: 'https://github.com/fabito/talesolutions-mvn-repo/raw/master/releases'
+}
+```
+```groovy
+dependencies {
+    compile "org.github.fabito:commons-configuration-appengine:1.1"
+}
+```
 
 
