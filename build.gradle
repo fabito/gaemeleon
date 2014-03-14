@@ -2,7 +2,7 @@ apply plugin: 'java'
 apply plugin: 'eclipse'
 apply plugin: 'maven'
 
-version =  '1.1-SNAPSHOT'
+version =  '1.1'
 group = 'com.github.fabito'
 	
 // tag::repositories[]
