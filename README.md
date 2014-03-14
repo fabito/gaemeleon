@@ -41,7 +41,7 @@ config.addConfiguration(new DatastoreConfiguration(datastoreService));
 ### Setting up build tools 
 
 
-#### Gradle Settings
+#### Gradle
 
 ```groovy
 repositories {
@@ -55,7 +55,7 @@ dependencies {
 }
 ```
 
-#### Maven settings
+#### Maven
 
 ```xml
 <repository>
