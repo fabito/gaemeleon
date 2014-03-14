@@ -7,7 +7,7 @@ and optionally caching them in [Memcache](https://developers.google.com/appengin
 
 There are 2 new Configuration implementations. 
 
-## DatastoreConfiguration
+### DatastoreConfiguration
 
 Firstly, the [**DatastoreConfiguration**](https://github.com/fabito/commons-configuration-appengine/blob/master/src/main/java/org/github/fabito/commons/configuration/appengine/DatastoreConfiguration.java) which retrieves/stores configuration values from the Datastore.
 By default, it uses the datastore kind "Configuration", the property name is the key and the property value is the "value" attribute. 
@@ -18,7 +18,7 @@ All datastore operations (get and put) are isolated in a dedicated transaction s
 DatastoreService datastoreService = DatastoreServiceFactory.getDatastoreService();
 Configuration configuration = new DatastoreConfiguration(datastoreService);
 ```
-## MemcacheConfiguration 
+### MemcacheConfiguration 
 
 Secondly, there is the [**MemcacheConfiguration**](https://github.com/fabito/commons-configuration-appengine/blob/master/src/main/java/org/github/fabito/commons/configuration/appengine/MemcacheConfiguration.java) 
 which is actually a Configuration decorator, which can (and should) be used to decorate the DatastoreConfiguration to avoid unnecessary hits to the datastore.
@@ -27,7 +27,7 @@ which is actually a Configuration decorator, which can (and should) be used to d
 Configuration datastoreConfig = new DatastoreConfiguration(datastoreService);
 Configuration config = new MemcacheConfiguration(datastoreConfig, memcacheService);
 ```
-## Mixing Configuration Sources
+### Mixing Configuration Sources
 
 The example below illustrates how one can still use the [**CompositeConfiguration**](http://commons.apache.org/proper/commons-configuration/userguide/howto_compositeconfiguration.html#Composite_Configuration_Details)
  with these new implementations. The order of precedence is first to last. So, if a property is not found in the application.properties file, it'll be searched in the Datastore.
@@ -38,8 +38,11 @@ config.addConfiguration(new PropertiesConfiguration("application.properties"));
 config.addConfiguration(new DatastoreConfiguration(datastoreService));
 ```
 
-Gradle Settings
-===============
+### Setting up build tools 
+
+
+#### Gradle Settings
+
 ```groovy
 repositories {
     mavenCentral()
@@ -52,8 +55,7 @@ dependencies {
 }
 ```
 
-Maven settings
-==============
+#### Maven settings
 
 ```xml
 <repository>
