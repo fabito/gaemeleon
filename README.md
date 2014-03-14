@@ -46,7 +46,7 @@ config.addConfiguration(new DatastoreConfiguration(datastoreService));
 ```groovy
 repositories {
     mavenCentral()
-    mavenRepo url: 'https://github.com/fabito/talesolutions-mvn-repo/raw/master/releases'
+    mavenRepo url: 'https://github.com/fabito/mvn-repo/raw/master/releases'
 }
 ```
 ```groovy
