@@ -6,3 +6,7 @@
 *.ear
 /bin
 /build
+/.settings
+/.classpath
+/.project
+/.gradle
