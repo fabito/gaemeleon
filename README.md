@@ -7,27 +7,25 @@ and optionally caching them in [Memcache](https://developers.google.com/appengin
 
 There are 2 new Configuration implementations. 
 
-Firstly, the DatastoreConfiguration which retrieves/stores configuration values from the Datastore.
-By default, it uses the datastore kind "Configuration", the property name is the key and the property value is the "value" attribute. Both the kind name and value property name can be changed by using a specific constructor.
+Firstly, the [*DatastoreConfiguration*](https://github.com/fabito/commons-configuration-appengine/blob/master/src/main/java/org/github/fabito/commons/configuration/appengine/DatastoreConfiguration.java) which retrieves/stores configuration values from the Datastore.
+By default, it uses the datastore kind "Configuration", the property name is the key and the property value is the "value" attribute. 
+Both the kind name and value property name can be changed by using a specific constructor.
 All datastore operations (get and put) are isolated in a dedicated transaction so that new Entity Groups don't "leak" to the client code.   
 
 ```java
 DatastoreService datastoreService = DatastoreServiceFactory.getDatastoreService();
 Configuration configuration = new DatastoreConfiguration(datastoreService);
 ```
-Secondly, there is the MemcacheConfiguration which is actually a Configuration decorator, which can (and should) be used
- to decorate the DatastoreConfiguration to avoid unnecessary hits to the datastore.
+Secondly, there is the [*MemcacheConfiguration*](https://github.com/fabito/commons-configuration-appengine/blob/master/src/main/java/org/github/fabito/commons/configuration/appengine/MemcacheConfiguration.java) 
+which is actually a Configuration decorator, which can (and should) be used to decorate the DatastoreConfiguration to avoid unnecessary hits to the datastore.
 
 ```java
-DatastoreService datastoreService = DatastoreServiceFactory.getDatastoreService();
-MemcacheService memcacheService = MemcacheServiceFactory.getMemcacheService();
-
 Configuration datastoreConfig = new DatastoreConfiguration(datastoreService);
 Configuration config = new MemcacheConfiguration(datastoreConfig, memcacheService);
 ```
 
-The example below illustrates how one can still use the CompositeConfiguration with these new implementations. The order of precedence is first to last.
-So, if a property is not found in the application.properties file, it'll be searched in the Datastore.
+The example below illustrates how one can still use the [*CompositeConfiguration*](http://commons.apache.org/proper/commons-configuration/userguide/howto_compositeconfiguration.html#Composite_Configuration_Details)
+ with these new implementations. The order of precedence is first to last. So, if a property is not found in the application.properties file, it'll be searched in the Datastore.
 
 ```java
 CompositeConfiguration config = new CompositeConfiguration();
