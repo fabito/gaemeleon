@@ -8,6 +8,7 @@ import java.util.NoSuchElementException;
 import javax.inject.Inject;
 
 import org.apache.commons.configuration.AbstractConfiguration;
+import org.apache.commons.configuration.Configuration;
 
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
@@ -23,8 +24,17 @@ import com.google.appengine.api.datastore.Query.FilterPredicate;
 import com.google.appengine.api.datastore.Transaction;
 
 /**
+ * {@link Configuration} implementation which retrieves/stores configurationvalues from Google App Engine's Datastore. 
+ * 
+ * By default, it uses the datastore kind "Configuration", the property name is the key and the
+ * property value is the "value" attribute. 
+ * Both the kind name and valueproperty name can be changed by using a specific constructor.
+ * 
+ * All datastore operations (get and put) are isolated in a dedicated transaction so that new
+ * Entity Groups don't "leak" to the client code.
+ * 
  * @author fabio
- *
+ * 
  */
 public class DatastoreConfiguration extends AbstractConfiguration {
 

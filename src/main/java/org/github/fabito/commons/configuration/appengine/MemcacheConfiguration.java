@@ -8,6 +8,9 @@ import org.apache.commons.configuration.Configuration;
 import com.google.appengine.api.memcache.MemcacheService;
 
 /**
+ * {@link Configuration} implementation which is actually just a decorator
+ * Could (and should) be used to decorate the {@link DatastoreConfiguration} to avoid unnecessary hits to the datastore.
+ * 
  * @author fabio
  *
  */
