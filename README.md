@@ -51,7 +51,7 @@ repositories {
 ```
 ```groovy
 dependencies {
-    compile "org.github.fabito:commons-configuration-appengine:1.1"
+    compile "org.github.fabito:commons-configuration-appengine:1.2"
 }
 ```
 
@@ -60,7 +60,7 @@ dependencies {
 ```xml
 <repository>
         <id>org.github.fabito</id>
-        <url>https://github.com/fabito/talesolutions-mvn-repo/raw/master/releases</url>
+        <url>https://github.com/fabito/mvn-repo/raw/master/releases</url>
         <snapshots>
                 <enabled>false</enabled>
         </snapshots>
@@ -74,6 +74,6 @@ dependencies {
 <dependency>
   <groupId>org.github.fabito</groupId>
   <artifactId>commons-configuration-appengine</artifactId>
-  <version>1.1</version>
+  <version>1.2</version>
 </dependency>
 ```
