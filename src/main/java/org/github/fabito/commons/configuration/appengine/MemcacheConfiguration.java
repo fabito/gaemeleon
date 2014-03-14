@@ -1,4 +1,4 @@
-package org.talesolutions.commons.configuration.appengine;
+package org.github.fabito.commons.configuration.appengine;
 
 import java.util.Iterator;
 

@@ -3,7 +3,7 @@ apply plugin: 'eclipse'
 apply plugin: 'maven'
 
 version =  '1.1-SNAPSHOT'
-group = 'org.talesolutions'
+group = 'com.github.fabito'
 	
 // tag::repositories[]
 def localMavenRepo = 'file://' + new File(System.getProperty('user.home'), '.m2/repository').absolutePath
