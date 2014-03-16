@@ -1,3 +1,6 @@
+[![Build Status](https://travis-ci.org/fabito/commons-configuration-appengine.png?branch=master)](https://travis-ci.org/fabito/commons-configuration-appengine)
+
+
 commons-configuration-appengine
 ===============================
 
