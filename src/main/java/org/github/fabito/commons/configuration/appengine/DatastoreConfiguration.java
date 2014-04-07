@@ -24,7 +24,7 @@ import com.google.appengine.api.datastore.Query.FilterPredicate;
 import com.google.appengine.api.datastore.Transaction;
 
 /**
- * {@link Configuration} implementation which retrieves/stores configurationvalues from Google App Engine's Datastore. 
+ * {@link Configuration} implementation which retrieves/stores configuration values from Google App Engine's Datastore. 
  * 
  * By default, it uses the datastore kind "Configuration", the property name is the key and the
  * property value is the "value" attribute. 
