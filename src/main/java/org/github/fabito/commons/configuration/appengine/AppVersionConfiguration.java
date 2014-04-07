@@ -10,13 +10,15 @@ import org.apache.commons.configuration.Configuration;
 import com.google.appengine.api.utils.SystemProperty;
 
 /**
- * {@link Configuration} decorator which prepends the current version the property's key.
+ * {@link Configuration} decorator which prepends the current version the
+ * property's key.
  * 
- * It uses {@link SystemProperty}'s applicationVersion.get() method to fetch the current runtime version.
- * Useful when having different values per version is needed.
+ * It uses {@link SystemProperty}'s applicationVersion.get() method to fetch the
+ * current runtime version. Useful when having different values per version is
+ * needed.
  * 
  * @author fabio
- *
+ * 
  */
 public class AppVersionConfiguration extends AbstractConfiguration {
 
@@ -26,7 +28,7 @@ public class AppVersionConfiguration extends AbstractConfiguration {
 	public AppVersionConfiguration(Configuration delegate) {
 		this.decorated = delegate;
 	}
-	
+
 	@Override
 	public boolean isEmpty() {
 		return !getKeys().hasNext();
@@ -43,18 +45,19 @@ public class AppVersionConfiguration extends AbstractConfiguration {
 	}
 
 	private String key(String key) {
-		return version().concat(key);
+		return prefix().concat(key);
 	}
 
 	@Override
 	public Iterator<String> getKeys() {
 		List<String> keys = new ArrayList<>();
-		for (Iterator<String> iterator = decorated.getKeys(); iterator.hasNext();) {
+		for (Iterator<String> iterator = decorated.getKeys(); iterator
+				.hasNext();) {
 			String k = iterator.next();
-			if (k.startsWith(version())) {
+			if (k.startsWith(prefix())) {
 				keys.add(k);
 			}
-		}	
+		}
 		return keys.iterator();
 	}
 
@@ -62,9 +65,14 @@ public class AppVersionConfiguration extends AbstractConfiguration {
 	protected void addPropertyDirect(String key, Object value) {
 		decorated.addProperty(key(key), value);
 	}
-	
+
+	private String prefix() {
+		return version().concat(DEFAULT_SEPARATOR);
+	}
+
 	private String version() {
-        return SystemProperty.applicationVersion.get().concat(DEFAULT_SEPARATOR);
+		return SystemProperty.applicationVersion.get() == null ? ""
+				: SystemProperty.applicationVersion.get();
 	}
 
 }
