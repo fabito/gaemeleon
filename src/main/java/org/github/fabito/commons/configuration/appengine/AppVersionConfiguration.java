@@ -9,6 +9,15 @@ import org.apache.commons.configuration.Configuration;
 
 import com.google.appengine.api.utils.SystemProperty;
 
+/**
+ * {@link Configuration} decorator which prepends the current version the property's key.
+ * 
+ * It uses {@link SystemProperty}'s applicationVersion.get() method to fetch the current runtime version.
+ * Useful when having different values per version is needed.
+ * 
+ * @author fabio
+ *
+ */
 public class AppVersionConfiguration extends AbstractConfiguration {
 
 	public static final String DEFAULT_SEPARATOR = ".";

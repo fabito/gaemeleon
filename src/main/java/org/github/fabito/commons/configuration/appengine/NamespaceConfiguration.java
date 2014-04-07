@@ -7,10 +7,22 @@ import org.apache.commons.configuration.Configuration;
 
 import com.google.appengine.api.NamespaceManager;
 
+/**
+ * {@link Configuration} decorator which leverages {@link NamespaceManager} to enforce a specific namespace. 
+ *
+ * By default the default namespace is enforced.
+ * Useful for multi tenant application which needs configurations per tenant. 
+ *  
+ * @author fabio
+  */
 public class NamespaceConfiguration extends AbstractConfiguration {
 
 	private Configuration decorated;
-	private String namespace;
+	private String namespace = null;
+
+	public NamespaceConfiguration(Configuration delegate) {
+		this.decorated = delegate;
+	}
 
 	public NamespaceConfiguration(Configuration delegate, String namespace) {
 		this.decorated = delegate;
