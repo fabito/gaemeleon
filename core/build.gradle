@@ -27,7 +27,7 @@ repositories {
 
 // tag::jar[]
 jar {
-    baseName = 'commons-configuration-appengine'
+    baseName = 'gaemeleon-core'
 }
 
 task sourcesJar(type: Jar, dependsOn: classes) {
