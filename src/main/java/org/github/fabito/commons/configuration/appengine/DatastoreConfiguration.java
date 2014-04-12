@@ -99,9 +99,9 @@ public class DatastoreConfiguration extends AbstractConfiguration {
 	@Override
 	public boolean isEmpty() {
 		final Query q = new Query(Entities.KIND_METADATA_KIND);
-		final Filter kinfFilter = new FilterPredicate(Entity.KEY_RESERVED_PROPERTY,
+		final Filter kindFilter = new FilterPredicate(Entity.KEY_RESERVED_PROPERTY,
 				FilterOperator.EQUAL, Entities.createKindKey(entityKind));
-		q.setFilter(kinfFilter);
+		q.setFilter(kindFilter);
 		return !datastoreService.prepare(q).asIterator().hasNext();
 	}
 

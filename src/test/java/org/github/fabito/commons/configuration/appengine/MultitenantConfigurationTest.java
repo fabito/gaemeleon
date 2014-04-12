@@ -92,9 +92,22 @@ public class MultitenantConfigurationTest {
 	}
 	
 	Configuration cfg = cfg();
+
+	@Test
+	public void write() {
+		cfg.addProperty("ptestd", "ptestvalued");
+		withinNamespace(NAMESPACE, new VoidWork() {
+			@Override
+			void vrun() {
+				cfg.addProperty("ptest", "ptestvalue");
+				assertThat(cfg.getString("ptest"), is("ptestvalue"));
+				assertThat(cfg.getString("ptestd"), is("ptestvalued"));
+			}
+		});
+	}
 	
 	@Test
-	public void test() {
+	public void read() {
 		withinNamespace(NAMESPACE, new VoidWork() {
 			@Override
 			void vrun() {
