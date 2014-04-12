@@ -1,8 +1,8 @@
-[![Build Status](https://travis-ci.org/fabito/commons-configuration-appengine.png?branch=master)](https://travis-ci.org/fabito/commons-configuration-appengine)
-[![Coverage Status](https://coveralls.io/repos/fabito/commons-configuration-appengine/badge.png?branch=master)](https://coveralls.io/r/fabito/commons-configuration-appengine?branch=master)
+[![Build Status](https://travis-ci.org/fabito/gaemeleon.png?branch=master)](https://travis-ci.org/fabito/gaemeleon)
+[![Coverage Status](https://coveralls.io/repos/fabito/gaemeleon/badge.png?branch=master)](https://coveralls.io/r/fabito/gaemeleon?branch=master)
 
-commons-configuration-appengine
-===============================
+gaemeleon
+=========
 
 This is an Apache's [commons-configuration](http://commons.apache.org/proper/commons-configuration/index.html) 
 extension which enables a Java application running on [Google AppEngine](https://developers.google.com/appengine/) read configuration data from the [Datastore](https://developers.google.com/appengine/docs/java/datastore/) 
