@@ -1,4 +1,4 @@
-package org.github.fabito.commons.configuration.appengine;
+package org.github.fabito.gaemeleon.core;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
@@ -9,7 +9,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import org.apache.commons.configuration.Configuration;
-import org.github.fabito.commons.configuration.appengine.MemcacheConfiguration;
+import org.github.fabito.gaemeleon.core.MemcacheConfiguration;
 import org.junit.Before;
 import org.junit.Test;
 

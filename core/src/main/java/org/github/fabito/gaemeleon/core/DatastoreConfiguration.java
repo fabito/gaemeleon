@@ -1,4 +1,4 @@
-package org.github.fabito.commons.configuration.appengine;
+package org.github.fabito.gaemeleon.core;
 
 import java.util.Iterator;
 import java.util.LinkedList;
