@@ -1,8 +1,6 @@
 package com.github.fabito.gaemeleon.core;
 
-import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.List;
 import java.util.logging.Logger;
 
 import org.apache.commons.configuration.AbstractConfiguration;
@@ -57,20 +55,12 @@ public class AppVersionConfiguration extends AbstractConfiguration {
 
 	@Override
 	public Iterator<String> getKeys() {
-		List<String> keys = new ArrayList<>();
-		for (Iterator<String> iterator = decorated.getKeys(); iterator
-				.hasNext();) {
-			String k = iterator.next();
-			if (k.startsWith(prefix())) {
-				keys.add(k);
-			}
-		}
-		return keys.iterator();
+		return decorated.getKeys();
 	}
 
 	@Override
 	protected void addPropertyDirect(String key, Object value) {
-		decorated.addProperty(key(key), value);
+		decorated.addProperty(key, value);
 	}
 
 	private String prefix() {

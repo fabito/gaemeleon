@@ -25,6 +25,7 @@ public class AppVersionConfigurationTest extends BaseConfigurationTest<AppVersio
 					MAJOR_VERSION + AppVersionConfiguration.DEFAULT_SEPARATOR + "p2", "nv2",
 					MAJOR_VERSION + AppVersionConfiguration.DEFAULT_SEPARATOR + "p3", "nv3",
 					"np4", "nv4");
+	private DatastoreConfiguration delegate;
 
     @Before
     public void before() {
@@ -34,7 +35,8 @@ public class AppVersionConfigurationTest extends BaseConfigurationTest<AppVersio
 
 	@Override
 	AppVersionConfiguration configuration() {
-		return new AppVersionConfiguration(new DatastoreConfiguration(datastoreService));
+		delegate = new DatastoreConfiguration(datastoreService);
+		return new AppVersionConfiguration(delegate);
 	}
 
 	@Override
@@ -60,7 +62,7 @@ public class AppVersionConfigurationTest extends BaseConfigurationTest<AppVersio
 		String value = "aaa";
 		assertThat(configuration.getString(key), nullValue());
 		configuration.addPropertyDirect(key, value);
-		assertThat(configuration.getString(key), is(value));
+		assertThat(delegate.getString(key), is(value));
 	}
 
 	@Test
