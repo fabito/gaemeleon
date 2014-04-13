@@ -1,4 +1,4 @@
-package org.github.fabito.gaemeleon.core;
+package com.github.fabito.gaemeleon.core;
 
 import java.util.Iterator;
 

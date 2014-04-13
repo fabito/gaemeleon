@@ -1,4 +1,4 @@
-package org.github.fabito.gaemeleon.core;
+package com.github.fabito.gaemeleon.core;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
@@ -9,11 +9,11 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import org.apache.commons.configuration.Configuration;
-import org.github.fabito.gaemeleon.core.DatastoreConfiguration;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.github.fabito.gaemeleon.core.DatastoreConfiguration;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;

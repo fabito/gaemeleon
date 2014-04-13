@@ -1,4 +1,4 @@
-package org.github.fabito.gaemeleon.core;
+package com.github.fabito.gaemeleon.core;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
@@ -9,10 +9,10 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import org.apache.commons.configuration.Configuration;
-import org.github.fabito.gaemeleon.core.MemcacheConfiguration;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.github.fabito.gaemeleon.core.MemcacheConfiguration;
 import com.google.appengine.api.memcache.MemcacheService;
 import com.google.appengine.api.memcache.MemcacheServiceFactory;
 import com.google.appengine.tools.development.testing.LocalDatastoreServiceTestConfig;

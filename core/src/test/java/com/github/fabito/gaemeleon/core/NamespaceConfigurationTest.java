@@ -1,6 +1,6 @@
-package org.github.fabito.gaemeleon.core;
+package com.github.fabito.gaemeleon.core;
 
-import static org.github.fabito.gaemeleon.core.NamespaceConfiguration.withinNamespace;
+import static com.github.fabito.gaemeleon.core.NamespaceConfiguration.withinNamespace;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsNull.nullValue;
@@ -8,12 +8,12 @@ import static org.junit.Assert.assertNull;
 
 import java.util.Map;
 
-import org.github.fabito.gaemeleon.core.DatastoreConfiguration;
-import org.github.fabito.gaemeleon.core.NamespaceConfiguration;
-import org.github.fabito.gaemeleon.core.NamespaceConfiguration.VoidWork;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.github.fabito.gaemeleon.core.DatastoreConfiguration;
+import com.github.fabito.gaemeleon.core.NamespaceConfiguration;
+import com.github.fabito.gaemeleon.core.NamespaceConfiguration.VoidWork;
 import com.google.common.collect.ImmutableMap;
 
 public class NamespaceConfigurationTest extends BaseConfigurationTest<NamespaceConfiguration> {

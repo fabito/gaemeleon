@@ -1,6 +1,6 @@
-package org.github.fabito.gaemeleon.core;
+package com.github.fabito.gaemeleon.core;
 
-import static org.github.fabito.gaemeleon.core.NamespaceConfiguration.withinNamespace;
+import static com.github.fabito.gaemeleon.core.NamespaceConfiguration.withinNamespace;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 
@@ -9,15 +9,15 @@ import java.util.Map.Entry;
 
 import org.apache.commons.configuration.CompositeConfiguration;
 import org.apache.commons.configuration.Configuration;
-import org.github.fabito.gaemeleon.core.AppVersionConfiguration;
-import org.github.fabito.gaemeleon.core.DatastoreConfiguration;
-import org.github.fabito.gaemeleon.core.MemcacheConfiguration;
-import org.github.fabito.gaemeleon.core.NamespaceConfiguration;
-import org.github.fabito.gaemeleon.core.NamespaceConfiguration.VoidWork;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import com.github.fabito.gaemeleon.core.AppVersionConfiguration;
+import com.github.fabito.gaemeleon.core.DatastoreConfiguration;
+import com.github.fabito.gaemeleon.core.MemcacheConfiguration;
+import com.github.fabito.gaemeleon.core.NamespaceConfiguration;
+import com.github.fabito.gaemeleon.core.NamespaceConfiguration.VoidWork;
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
 import com.google.appengine.api.datastore.Entity;
