@@ -14,11 +14,14 @@ import org.junit.Test;
 
 public class ConfigurationResourceTest {
 
-	ConfigurationResource resource;
+	private static final Property PROPERTY = new Property("p1", "new v1");
+	private ConfigurationResource resource;
+	private PropertiesConfiguration configuration;
 	
 	@Before
 	public void setup() throws Throwable {
-		resource = new ConfigurationResource(new PropertiesConfiguration("test.properties"));
+		configuration = new PropertiesConfiguration("test.properties");
+		resource = new ConfigurationResource(configuration);
 	}
 	
 	@Test
@@ -33,6 +36,50 @@ public class ConfigurationResourceTest {
 	public void shouldNotFindProperty() {
 		Response r = resource.get("2133212");
 		assertThat(r.getStatus(), is(Status.NOT_FOUND.getStatusCode()));
+	}
+
+	@Test
+	public void shouldReturnBadRequest() {
+		Response r = resource.put("2133212", null);
+		assertThat(r.getStatus(), is(Status.BAD_REQUEST.getStatusCode()));
+		
+		r = resource.put(null, null);
+		assertThat(r.getStatus(), is(Status.BAD_REQUEST.getStatusCode()));
+
+		r = resource.put("", null);
+		assertThat(r.getStatus(), is(Status.BAD_REQUEST.getStatusCode()));
+
+	}
+
+	@Test
+	public void shouldReturnNotFound() {
+		Response r = resource.put("2133212", PROPERTY);
+		assertThat(r.getStatus(), is(Status.NOT_FOUND.getStatusCode()));
+	}
+
+	@Test
+	public void shouldReturnCreated() {
+		Response r = resource.put(PROPERTY.getKey(), PROPERTY);
+		assertThat(r.getStatus(), is(Status.CREATED.getStatusCode()));
+		assertThat(configuration.getString(PROPERTY.getKey()), is(PROPERTY.getValue()));
+	}
+
+	@Test
+	public void shouldCreateNew() {
+		Property property2 = new Property("baseUrl", "www.fabito.com");
+		Response r = resource.post(property2);
+		assertThat(r.getStatus(), is(Status.CREATED.getStatusCode()));
+		assertThat(configuration.getString(property2.getKey()), is(property2.getValue()));
+	}
+
+	@Test
+	public void postShould40X() {
+		Response r = resource.post(null);
+		assertThat(r.getStatus(), is(Status.BAD_REQUEST.getStatusCode()));
+		
+		r = resource.post(new Property(null, null));
+		assertThat(r.getStatus(), is(Status.BAD_REQUEST.getStatusCode()));
+		
 	}
 	
 	@Test

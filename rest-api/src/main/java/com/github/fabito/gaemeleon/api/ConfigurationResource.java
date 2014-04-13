@@ -6,19 +6,23 @@ import java.util.List;
 
 import javax.inject.Inject;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
-import javax.ws.rs.core.UriInfo;
 
 import org.apache.commons.configuration.Configuration;
 
+import com.google.common.base.Strings;
+
+/**
+ * Exposes REST operations for general {@link Configuration} maitenenace.
+ * 
+ * @author fabio
+ */
 public class ConfigurationResource {
-	
-	@Context
-	UriInfo uriInfo;
 	
 	private Configuration configuration;
 	
@@ -49,14 +53,31 @@ public class ConfigurationResource {
 		return Response.ok(property).build();
 	}
 	
-//	@PUT
-//	@Path("/{propertyName}")
-//	public Response put(@PathParam("propertyName") String propertyName) {
-//		Object value = null;
-//		configuration.addProperty(propertyName, value);
-//		Object values = null;
-//		UriBuilder uriBuilder = uriInfo.getAbsolutePathBuilder();
-//		URI location = uriBuilder.build(values);
-//		return Response.created(location).build();
-//	}
+	@PUT
+	@Path("/{propertyName}")
+	public Response put(@PathParam("propertyName") String propertyName, Property property) {
+
+		if (property == null || Strings.isNullOrEmpty(property.getKey())) {
+			return Response.status(Status.BAD_REQUEST) .build();
+		}
+		
+		if (configuration.containsKey(propertyName)) {
+			configuration.setProperty(propertyName, property.getValue());
+			return Response.status(Status.CREATED) .build();
+		} else {
+			return Response.status(Status.NOT_FOUND).build();
+		}
+	}
+
+	@POST
+	public Response post(Property property) {
+		
+		if (property == null || Strings.isNullOrEmpty(property.getKey())) {
+			return Response.status(Status.BAD_REQUEST) .build();
+		}
+		
+		configuration.addProperty(property.getKey(), property.getValue());
+		return Response.status(Status.CREATED) .build();
+	}
+
 }
