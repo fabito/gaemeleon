@@ -5,10 +5,10 @@ gaemeleon
 =========
 
 This is an Apache's [commons-configuration](http://commons.apache.org/proper/commons-configuration/index.html) 
-extension which enables a Java application running on [Google AppEngine](https://developers.google.com/appengine/) read configuration data from the [Datastore](https://developers.google.com/appengine/docs/java/datastore/) 
+extension that enables a Java applications running on [Google AppEngine](https://developers.google.com/appengine/) to read and write configuration data from the [Datastore](https://developers.google.com/appengine/docs/java/datastore/) 
 and optionally caching them in [Memcache](https://developers.google.com/appengine/docs/java/memcache/) to avoid unnecessary datastore hits.
 
-There are 2 new Configuration implementations. 
+There are 4 new Configuration implementations. 
 
 ### DatastoreConfiguration
 
@@ -23,13 +23,32 @@ Configuration configuration = new DatastoreConfiguration(datastoreService);
 ```
 ### MemcacheConfiguration 
 
-Secondly, there is the [**MemcacheConfiguration**](https://github.com/fabito/commons-configuration-appengine/blob/master/core/src/main/java/com/github/fabito/gaemeleon/core/MemcacheConfiguration.java) 
+Secondly, there is the [**MemcacheConfiguration**](https://github.com/fabito/gaemeleon/blob/master/core/src/main/java/com/github/fabito/gaemeleon/core/MemcacheConfiguration.java) 
 which is actually a Configuration decorator, which can (and should) be used to decorate the DatastoreConfiguration to avoid unnecessary hits to the datastore.
 
 ```java
 Configuration datastoreConfig = new DatastoreConfiguration(datastoreService);
 Configuration config = new MemcacheConfiguration(datastoreConfig, memcacheService);
 ```
+
+### NamespaceConfiguration 
+
+The [**NamespaceConfiguration**](https://github.com/fabito/gaemeleon/blob/master/core/src/main/java/com/github/fabito/gaemeleon/core/NamespaceConfiguration.java) is another decorator, which forces all operation to run within the specified namespace.
+
+```java
+Configuration datastoreConfig = new DatastoreConfiguration(datastoreService);
+Configuration config = new NamespaceConfiguration(datastoreConfig, "myNamespace");
+```
+
+### AppVersionConfiguration 
+
+The [**AppVersionConfiguration**](https://github.com/fabito/gaemeleon/blob/master/core/src/main/java/com/github/fabito/gaemeleon/core/AppVersionConfiguration.java) is another decorator that prepends the current version to the property's key. It uses SystemProperty's applicationVersion.get() method to fetch the current runtime version. Useful when having different configuration values per version is needed.
+
+```java
+Configuration datastoreConfig = new DatastoreConfiguration(datastoreService);
+Configuration config = new AppVersionConfiguration(datastoreConfig);
+```
+
 ### Mixing Configuration Sources
 
 The example below illustrates how one can still use the [**CompositeConfiguration**](http://commons.apache.org/proper/commons-configuration/userguide/howto_compositeconfiguration.html#Composite_Configuration_Details)
