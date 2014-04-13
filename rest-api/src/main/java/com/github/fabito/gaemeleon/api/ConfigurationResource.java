@@ -15,8 +15,6 @@ import javax.ws.rs.core.Response.Status;
 
 import org.apache.commons.configuration.Configuration;
 
-import com.google.common.base.Strings;
-
 /**
  * Exposes REST operations for general {@link Configuration} maitenenace.
  * 
@@ -57,7 +55,7 @@ public class ConfigurationResource {
 	@Path("/{propertyName}")
 	public Response put(@PathParam("propertyName") String propertyName, Property property) {
 
-		if (property == null || Strings.isNullOrEmpty(property.getKey())) {
+		if (property == null || isNullOrEmpty(property.getKey())) {
 			return Response.status(Status.BAD_REQUEST) .build();
 		}
 		
@@ -69,10 +67,14 @@ public class ConfigurationResource {
 		}
 	}
 
+	private boolean isNullOrEmpty(String str) {
+		return str == null || str.length() == 0;
+	}
+
 	@POST
 	public Response post(Property property) {
 		
-		if (property == null || Strings.isNullOrEmpty(property.getKey())) {
+		if (property == null || isNullOrEmpty(property.getKey())) {
 			return Response.status(Status.BAD_REQUEST) .build();
 		}
 		
