@@ -54,7 +54,7 @@ repositories {
 ```
 ```groovy
 dependencies {
-    compile "org.github.fabito:gaemeleon-core:1.3"
+    compile "com.github.fabito:gaemeleon-core:1.0"
 }
 ```
 
@@ -62,7 +62,7 @@ dependencies {
 
 ```xml
 <repository>
-        <id>org.github.fabito</id>
+        <id>com.github.fabito</id>
         <url>https://github.com/fabito/mvn-repo/raw/master/releases</url>
         <snapshots>
                 <enabled>false</enabled>
@@ -75,8 +75,8 @@ dependencies {
 
 ```xml
 <dependency>
-  <groupId>org.github.fabito</groupId>
+  <groupId>com.github.fabito</groupId>
   <artifactId>gaemeleon-core</artifactId>
-  <version>1.3</version>
+  <version>1.0</version>
 </dependency>
 ```
