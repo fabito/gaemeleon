@@ -3,6 +3,7 @@ package com.github.fabito.gaemeleon.core;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.logging.Logger;
 
 import org.apache.commons.configuration.AbstractConfiguration;
 import org.apache.commons.configuration.Configuration;
@@ -23,6 +24,10 @@ import com.google.appengine.api.utils.SystemProperty;
 public class AppVersionConfiguration extends AbstractConfiguration {
 
 	public static final String DEFAULT_SEPARATOR = ".";
+
+	private static final Logger LOGGER = Logger
+			.getLogger(AppVersionConfiguration.class.getSimpleName());
+
 	private Configuration decorated;
 
 	public AppVersionConfiguration(Configuration delegate) {
@@ -41,7 +46,9 @@ public class AppVersionConfiguration extends AbstractConfiguration {
 
 	@Override
 	public Object getProperty(String key) {
-		return decorated.getProperty(key(key));
+		String prefixedKey = key(key);
+		LOGGER.finer("Fetching property using prefixed key: " + prefixedKey);
+		return decorated.getProperty(prefixedKey);
 	}
 
 	private String key(String key) {
@@ -67,13 +74,17 @@ public class AppVersionConfiguration extends AbstractConfiguration {
 	}
 
 	private String prefix() {
-		return version().concat(DEFAULT_SEPARATOR);
+		String prefix = version().concat(DEFAULT_SEPARATOR);
+		LOGGER.finer("Using prefix: " + prefix);
+		return prefix;
 	}
 
 	private String version() {
 		String version = SystemProperty.applicationVersion.get();
-		return version == null ? ""
-				: version.substring(0, version.indexOf(DEFAULT_SEPARATOR));
+		LOGGER.finer("Current version: " + version);
+		int indexOfDot = version.indexOf(DEFAULT_SEPARATOR);
+		return version == null ? "" : indexOfDot == -1 ? version : version
+				.substring(0, indexOfDot);
 	}
 
 }

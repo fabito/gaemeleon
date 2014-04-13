@@ -1,6 +1,7 @@
 package com.github.fabito.gaemeleon.core;
 
 import java.util.Iterator;
+import java.util.logging.Logger;
 
 import org.apache.commons.configuration.AbstractConfiguration;
 import org.apache.commons.configuration.Configuration;
@@ -16,9 +17,11 @@ import com.google.appengine.api.memcache.MemcacheService;
  */
 public class MemcacheConfiguration extends AbstractConfiguration {
 
+	private static final Logger LOGGER = Logger.getLogger(MemcacheConfiguration.class.getSimpleName());
+	
 	private Configuration delegate;
 	private MemcacheService memcacheService;
-	private final static String DEFAULT_MEMCACHE_KEY_PREFIX = MemcacheConfiguration.class.getName();
+	private final static String DEFAULT_MEMCACHE_KEY_PREFIX = MemcacheConfiguration.class.getName() + "#";
 	private String memcacheKeyPrefix;
 
 	public MemcacheConfiguration(final Configuration delegate, final MemcacheService memcacheService) {
@@ -55,8 +58,10 @@ public class MemcacheConfiguration extends AbstractConfiguration {
 
 	@Override
 	public Object getProperty(final String key) {
+		LOGGER.finer("Fetching property from memcache: " + key);
 		Object propertyValue = memcacheService.get(cacheKey(key));
 		if ( propertyValue == null ) {
+			LOGGER.finer("Property not found in memcache: " + key + ". Delegating...");
 			propertyValue = delegate.getProperty(key);
 			if ( propertyValue != null ) {
 				memcacheService.put(cacheKey(key), propertyValue);

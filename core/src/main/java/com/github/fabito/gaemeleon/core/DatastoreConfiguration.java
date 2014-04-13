@@ -4,6 +4,7 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.logging.Logger;
 
 import javax.inject.Inject;
 
@@ -38,6 +39,8 @@ import com.google.appengine.api.datastore.Transaction;
  */
 public class DatastoreConfiguration extends AbstractConfiguration {
 
+	private static final Logger LOGGER = Logger.getLogger(DatastoreConfiguration.class.getSimpleName());
+	
 	public static final String DEFAULT_ENTITY_KIND = "Configuration";
 	public static final String DEFAULT_PROPERTY_VALUE = "value";
 
@@ -85,10 +88,12 @@ public class DatastoreConfiguration extends AbstractConfiguration {
 	@Override
 	public Object getProperty(final String key) {
 		try {
+			LOGGER.finer("Fetching property from datastore: " + key);
 			final Entity entity = getInsideTransaction(newKey(key));
 			final Object value = entity.getProperty(propertyValue);
 			return value;
 		} catch (final EntityNotFoundException e) {
+			LOGGER.finer("Property not found in datastore: " + key);
 			if (isThrowExceptionOnMissing()) {
 				throw new NoSuchElementException("key not found '" + key + "'");
 			}

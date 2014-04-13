@@ -1,6 +1,7 @@
 package com.github.fabito.gaemeleon.core;
 
 import java.util.Iterator;
+import java.util.logging.Logger;
 
 import org.apache.commons.configuration.AbstractConfiguration;
 import org.apache.commons.configuration.Configuration;
@@ -17,6 +18,8 @@ import com.google.appengine.api.NamespaceManager;
   */
 public class NamespaceConfiguration extends AbstractConfiguration {
 
+	private static final Logger LOGGER = Logger.getLogger(NamespaceConfiguration.class.getSimpleName());
+	
 	private Configuration decorated;
 	private String namespace = null;
 
@@ -93,11 +96,14 @@ public class NamespaceConfiguration extends AbstractConfiguration {
  	
 	public static <R> R withinNamespace(String namespace, Work<R> work) {
 		String oldNamespace = NamespaceManager.get();
+		LOGGER.finer("Backing up old namespace: " + oldNamespace);
+		LOGGER.finer("Setting namespace to: " + namespace);
 		NamespaceManager.set(namespace);
 		try {
 			R r = work.run();
 			return r;
 		} finally {
+			LOGGER.finer("Restoring old namespace: " + oldNamespace);
 			NamespaceManager.set(oldNamespace);
 		}
 	}
