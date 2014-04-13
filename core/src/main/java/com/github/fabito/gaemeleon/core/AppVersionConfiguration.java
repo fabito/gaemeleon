@@ -71,8 +71,9 @@ public class AppVersionConfiguration extends AbstractConfiguration {
 	}
 
 	private String version() {
-		return SystemProperty.applicationVersion.get() == null ? ""
-				: SystemProperty.applicationVersion.get();
+		String version = SystemProperty.applicationVersion.get();
+		return version == null ? ""
+				: version.substring(0, version.indexOf(DEFAULT_SEPARATOR));
 	}
 
 }

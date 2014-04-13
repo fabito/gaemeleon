@@ -17,17 +17,18 @@ import com.google.common.collect.ImmutableMap;
 
 public class AppVersionConfigurationTest extends BaseConfigurationTest<AppVersionConfiguration> {
 
-	private static final String VERSION = "1-0-69";
+	private static final String MAJOR_VERSION = "1-0-69";
+	private static final String MINOR_VERSION = "2014-04-13T03:33:14Z";
 
 	protected Map<String, String> initialConfigurationForVersion = ImmutableMap
-			.<String, String> of(VERSION + AppVersionConfiguration.DEFAULT_SEPARATOR + "p1", "nv1",
-					VERSION + AppVersionConfiguration.DEFAULT_SEPARATOR + "p2", "nv2",
-					VERSION + AppVersionConfiguration.DEFAULT_SEPARATOR + "p3", "nv3",
+			.<String, String> of(MAJOR_VERSION + AppVersionConfiguration.DEFAULT_SEPARATOR + "p1", "nv1",
+					MAJOR_VERSION + AppVersionConfiguration.DEFAULT_SEPARATOR + "p2", "nv2",
+					MAJOR_VERSION + AppVersionConfiguration.DEFAULT_SEPARATOR + "p3", "nv3",
 					"np4", "nv4");
 
     @Before
     public void before() {
-        SystemProperty.applicationVersion.set(VERSION);
+        SystemProperty.applicationVersion.set(MAJOR_VERSION + AppVersionConfiguration.DEFAULT_SEPARATOR + MINOR_VERSION);
 		addConfigurations(initialConfigurationForVersion);
     }
 
