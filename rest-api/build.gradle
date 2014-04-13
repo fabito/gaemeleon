@@ -2,8 +2,10 @@ jar {
     baseName = 'gaemeleon-rest-api'
 }
 
+def jerseyVersion = "1.18.1"
+
 dependencies {
     compile 'javax.ws.rs:jsr311-api:1.1.1'
-    testRuntime 'com.sun.jersey:jersey-server:1.18.1'
-    testRuntime 'com.sun.jersey:jersey-core:1.18.1'
+    testRuntime "com.sun.jersey:jersey-server:${jerseyVersion}"
+    testRuntime "com.sun.jersey:jersey-core:${jerseyVersion}"
 }
