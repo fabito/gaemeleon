@@ -12,7 +12,7 @@ There are 2 new Configuration implementations.
 
 ### DatastoreConfiguration
 
-Firstly, the [**DatastoreConfiguration**](https://github.com/fabito/gaemeleon/blob/master/src/main/java/com/github/fabito/gaemeleon/core/DatastoreConfiguration.java) which retrieves/stores configuration values from the Datastore.
+Firstly, the [**DatastoreConfiguration**](https://github.com/fabito/gaemeleon/blob/master/core/src/main/java/com/github/fabito/gaemeleon/core/DatastoreConfiguration.java) which retrieves/stores configuration values from the Datastore.
 By default, it uses the datastore kind "Configuration", the property name is the key and the property value is the "value" attribute. 
 Both the kind name and value property name can be changed by using a specific constructor.
 All datastore operations (get and put) are isolated in a dedicated transaction so that new Entity Groups don't "leak" to the client code.   
@@ -23,7 +23,7 @@ Configuration configuration = new DatastoreConfiguration(datastoreService);
 ```
 ### MemcacheConfiguration 
 
-Secondly, there is the [**MemcacheConfiguration**](https://github.com/fabito/commons-configuration-appengine/blob/master/src/main/java/com/github/fabito/gaemeleon/core/MemcacheConfiguration.java) 
+Secondly, there is the [**MemcacheConfiguration**](https://github.com/fabito/commons-configuration-appengine/blob/master/core/src/main/java/com/github/fabito/gaemeleon/core/MemcacheConfiguration.java) 
 which is actually a Configuration decorator, which can (and should) be used to decorate the DatastoreConfiguration to avoid unnecessary hits to the datastore.
 
 ```java
