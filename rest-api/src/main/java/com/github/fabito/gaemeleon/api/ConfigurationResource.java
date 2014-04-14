@@ -3,6 +3,7 @@ package com.github.fabito.gaemeleon.api;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.logging.Logger;
 
 import javax.inject.Inject;
 import javax.ws.rs.GET;
@@ -21,9 +22,12 @@ import org.apache.commons.configuration.Configuration;
  * @author fabio
  */
 public class ConfigurationResource {
-	
+
+	private static final Logger LOGGER = Logger
+			.getLogger(ConfigurationResource.class.getSimpleName());
+
 	private Configuration configuration;
-	
+
 	@Inject
 	public ConfigurationResource(Configuration configuration) {
 		super();
@@ -33,13 +37,14 @@ public class ConfigurationResource {
 	@GET
 	public List<Property> listAll() {
 		List<Property> result = new ArrayList<>();
-		for (Iterator<String> iterator = configuration.getKeys(); iterator.hasNext();) {
+		for (Iterator<String> iterator = configuration.getKeys(); iterator
+				.hasNext();) {
 			String k = iterator.next();
 			result.add(new Property(k, configuration.getProperty(k)));
 		}
 		return result;
 	}
-	
+
 	@GET
 	@Path("/{propertyName}")
 	public Response get(@PathParam("propertyName") String propertyName) {
@@ -47,39 +52,38 @@ public class ConfigurationResource {
 		if (propertyValue == null) {
 			return Response.status(Status.NOT_FOUND).build();
 		}
-		Property property = new Property (propertyName, propertyValue);
+		Property property = new Property(propertyName, propertyValue);
 		return Response.ok(property).build();
 	}
-	
+
 	@PUT
 	@Path("/{propertyName}")
-	public Response put(@PathParam("propertyName") String propertyName, Property property) {
-
+	public Response put(@PathParam("propertyName") String propertyName,
+			Property property) {
 		if (property == null || isNullOrEmpty(property.getKey())) {
-			return Response.status(Status.BAD_REQUEST) .build();
+			return Response.status(Status.BAD_REQUEST).build();
 		}
-		
+		LOGGER.finer("Got property = " + property);
 		if (configuration.containsKey(propertyName)) {
+			LOGGER.finer("config contains proeprty: " + propertyName);
 			configuration.setProperty(propertyName, property.getValue());
-			return Response.status(Status.CREATED) .build();
+			return Response.status(Status.CREATED).build();
 		} else {
 			return Response.status(Status.NOT_FOUND).build();
 		}
 	}
 
+	@POST
+	public Response post(Property property) {
+		if (property == null || isNullOrEmpty(property.getKey())) {
+			return Response.status(Status.BAD_REQUEST).build();
+		}
+		LOGGER.finer("Got property = " + property);
+		configuration.addProperty(property.getKey(), property.getValue());
+		return Response.status(Status.CREATED).build();
+	}
+
 	private boolean isNullOrEmpty(String str) {
 		return str == null || str.length() == 0;
 	}
-
-	@POST
-	public Response post(Property property) {
-		
-		if (property == null || isNullOrEmpty(property.getKey())) {
-			return Response.status(Status.BAD_REQUEST) .build();
-		}
-		
-		configuration.addProperty(property.getKey(), property.getValue());
-		return Response.status(Status.CREATED) .build();
-	}
-
 }

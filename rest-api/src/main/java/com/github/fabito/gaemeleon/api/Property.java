@@ -25,4 +25,9 @@ public class Property {
 		return value;
 	}
 
+	@Override
+	public String toString() {
+		return "Property [key=" + key + ", value=" + value + "]";
+	}
+
 }

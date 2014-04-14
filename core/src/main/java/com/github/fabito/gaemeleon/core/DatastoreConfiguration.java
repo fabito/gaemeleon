@@ -112,6 +112,7 @@ public class DatastoreConfiguration extends AbstractConfiguration {
 
 	@Override
 	protected void addPropertyDirect(final String key, final Object value) {
+		LOGGER.finer(String.format("Adding new property {key=%s, value=%s}", key, value));
 		final Entity entity = new Entity(newKey(key));
 		entity.setProperty(propertyValue, value);
 		putInsideTransaction(entity);
