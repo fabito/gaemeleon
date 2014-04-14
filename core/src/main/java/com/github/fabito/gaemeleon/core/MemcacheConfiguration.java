@@ -48,10 +48,6 @@ public class MemcacheConfiguration extends AbstractConfiguration {
 		return true;
 	}
 
-	/**
-	 * @param key
-	 * @return
-	 */
 	protected String cacheKey(final String key) {
 		return memcacheKeyPrefix + key;
 	}
