@@ -68,6 +68,7 @@ public class MemcacheConfiguration extends AbstractConfiguration {
 
 	@Override
 	protected void addPropertyDirect(final String key, final Object value) {
+		memcacheService.delete(cacheKey(key));
 		delegate.addProperty(key, value);
 	}
 

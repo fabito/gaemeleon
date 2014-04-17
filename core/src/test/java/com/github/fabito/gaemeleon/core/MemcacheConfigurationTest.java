@@ -3,6 +3,7 @@ package com.github.fabito.gaemeleon.core;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsNull.nullValue;
+import static org.hamcrest.core.IsNull.notNullValue;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -103,6 +104,14 @@ public class MemcacheConfigurationTest {
 		verify(delegate, times(1)).addProperty("p666", "v666");
 	}
 
+	@Test
+	public void addPropertyDirectShouldRemoveFromCache() {
+		config.getString(P1);
+		assertThat(memcacheService.get(config.cacheKey(P1)), notNullValue());
+		config.addPropertyDirect(P1, "v666");
+		assertThat(memcacheService.get(config.cacheKey(P1)), nullValue());
+	}
+	
 	@Test
 	public void getKeysShouldBeDelegated() {
 		config.getKeys();
