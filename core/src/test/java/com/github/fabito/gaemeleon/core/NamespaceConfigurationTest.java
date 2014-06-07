@@ -71,6 +71,14 @@ public class NamespaceConfigurationTest extends BaseConfigurationTest<NamespaceC
 	}
 	
 	@Test
+	public void clearProperty() {
+		assertThat(configuration.getString("np1"), is("nv1"));
+		configuration.clearProperty("np1");
+		assertThat(configuration.getString("np1"), nullValue());
+	}
+	
+	
+	@Test
 	public void isEmptyShouldReturnTrue() {
 		removeAllWithinNamespace();
 		assertThat(configuration.isEmpty(), is(true));

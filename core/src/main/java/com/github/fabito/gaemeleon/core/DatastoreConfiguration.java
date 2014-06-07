@@ -148,4 +148,22 @@ public class DatastoreConfiguration extends AbstractConfiguration {
 		return featureEntity;
 	}
 
+	private void deleteInsideTransaction(Key newKey) {
+		final Transaction txn = datastoreService.beginTransaction();
+		try {
+			datastoreService.delete(txn, newKey);
+			txn.commit();
+		} finally  {
+			if(txn.isActive()) {
+				txn.rollback();
+			}
+		}		
+	}
+	
+	@Override
+	protected void clearPropertyDirect(String key) {
+		LOGGER.finer("Removing property from datastore: " + key);
+		deleteInsideTransaction(newKey(key));
+	}
+	
 }

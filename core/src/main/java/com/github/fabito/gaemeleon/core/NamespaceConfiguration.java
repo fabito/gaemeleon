@@ -81,6 +81,16 @@ public class NamespaceConfiguration extends AbstractConfiguration {
 		});
 	}
 	
+	@Override
+	protected void clearPropertyDirect(final String key) {
+		withinNamespace(namespace, new VoidWork() {
+			@Override
+			void vrun() {
+				decorated.clearProperty(key);
+			}
+		});
+	}
+	
 	static interface Work<T> {
 		public T run();
 	}

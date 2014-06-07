@@ -76,5 +76,10 @@ public class AppVersionConfiguration extends AbstractConfiguration {
 		return version == null ? "" : indexOfDot == -1 ? version : version
 				.substring(0, indexOfDot);
 	}
+	
+	@Override
+	protected void clearPropertyDirect(String key) {
+		decorated.clearProperty(key);
+	}
 
 }

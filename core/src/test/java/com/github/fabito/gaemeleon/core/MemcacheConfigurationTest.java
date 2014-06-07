@@ -117,5 +117,12 @@ public class MemcacheConfigurationTest {
 		config.getKeys();
 		verify(delegate, times(1)).getKeys();		
 	}
+	
+	@Test
+	public void clearProperty() {
+		assertThat(config.getString("p1"), is("v1"));
+		config.clearProperty("p1");
+		assertThat(memcacheService.get(config.cacheKey(P1)), nullValue());
+	}
 
 }

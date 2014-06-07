@@ -76,5 +76,11 @@ public class MemcacheConfiguration extends AbstractConfiguration {
 	public Iterator<String> getKeys() {
 		return delegate.getKeys();
 	}
+	
+	@Override
+	protected void clearPropertyDirect(String key) {
+		memcacheService.delete(cacheKey(key));
+		delegate.clearProperty(key);
+	}
 
 }

@@ -42,6 +42,14 @@ public class DatastoreConfigurationTest extends BaseConfigurationTest<DatastoreC
 	public void containsKey() {
 		assertThat(configuration.containsKey("p1"), is(true));
 	}
+	
+	@Test
+	public void clearProperty() {
+		assertThat(configuration.getString("p1"), is("v1"));
+		configuration.clearProperty("p1");
+		assertThat(configuration.getString("p1"), nullValue());
+	}
+	
 
 	@Override
 	Map<String, String> initialValues() {

@@ -52,6 +52,13 @@ public class AppVersionConfigurationTest extends BaseConfigurationTest<AppVersio
 	}
 
 	@Test
+	public void clearProperty() {
+		assertThat(configuration.getString("p1"), is("nv1"));
+		configuration.clearProperty("p1");
+		assertThat(delegate.getString("p1"), nullValue());
+	}
+	
+	@Test
 	public void prefixedProperties() {
 		assertNull(configuration.getString("np4"));
 	}
