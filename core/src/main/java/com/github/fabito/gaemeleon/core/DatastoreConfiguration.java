@@ -19,6 +19,7 @@ import com.google.appengine.api.datastore.EntityNotFoundException;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.datastore.Query;
+import com.google.appengine.api.datastore.Text;
 import com.google.appengine.api.datastore.Query.Filter;
 import com.google.appengine.api.datastore.Query.FilterOperator;
 import com.google.appengine.api.datastore.Query.FilterPredicate;
@@ -38,6 +39,8 @@ import com.google.appengine.api.datastore.Transaction;
  * 
  */
 public class DatastoreConfiguration extends AbstractConfiguration {
+
+	public static final int STRING_MAX_LENGTH = 500;
 
 	private static final Logger LOGGER = Logger.getLogger(DatastoreConfiguration.class.getSimpleName());
 	
@@ -91,7 +94,7 @@ public class DatastoreConfiguration extends AbstractConfiguration {
 			LOGGER.finer("Fetching property from datastore: " + key);
 			final Entity entity = getInsideTransaction(newKey(key));
 			final Object value = entity.getProperty(propertyValue);
-			return value;
+			return value instanceof Text ? ((Text)value).getValue() : value;
 		} catch (final EntityNotFoundException e) {
 			LOGGER.finer("Property not found in datastore: " + key);
 			if (isThrowExceptionOnMissing()) {
@@ -114,10 +117,20 @@ public class DatastoreConfiguration extends AbstractConfiguration {
 	protected void addPropertyDirect(final String key, final Object value) {
 		LOGGER.finer(String.format("Adding new property {key=%s, value=%s}", key, value));
 		final Entity entity = new Entity(newKey(key));
-		entity.setProperty(propertyValue, value);
+		entity.setProperty(propertyValue, val(value));
 		putInsideTransaction(entity);
 	}
 
+	private Object val(Object value) {
+		if (value instanceof String) {
+			String valueStr = (String) value;
+			if (valueStr.length() > STRING_MAX_LENGTH) {
+				return new Text(valueStr);
+			}
+		}
+		return value;
+	}
+	
 	protected Key newKey(final String key) {
 		return KeyFactory.createKey(entityKind, key);
 	}

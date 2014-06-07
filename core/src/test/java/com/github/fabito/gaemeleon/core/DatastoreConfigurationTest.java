@@ -9,6 +9,7 @@ import java.util.Map;
 import org.junit.Test;
 
 import com.github.fabito.gaemeleon.core.DatastoreConfiguration;
+import com.google.appengine.repackaged.com.google.common.base.Strings;
 
 public class DatastoreConfigurationTest extends BaseConfigurationTest<DatastoreConfiguration> {
 
@@ -16,6 +17,12 @@ public class DatastoreConfigurationTest extends BaseConfigurationTest<DatastoreC
 		return new DatastoreConfiguration(datastoreService);
 	}
 
+	@Test
+	public void existentLongPropertyShouldReturnRightValue() {
+		assertThat(configuration.getString("p5"), is(Strings.repeat("v", DatastoreConfiguration.STRING_MAX_LENGTH + 1)));
+	}
+	
+	
 	@Test
 	public void existentPropertyShouldReturnRightValue() {
 		assertThat(configuration.getString("p1"), is("v1"));

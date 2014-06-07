@@ -20,6 +20,8 @@ import com.google.appengine.api.datastore.Entity;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
+import com.google.appengine.api.datastore.Text;
+import com.google.appengine.repackaged.com.google.common.base.Strings;
 import com.google.appengine.tools.development.testing.LocalDatastoreServiceTestConfig;
 import com.google.appengine.tools.development.testing.LocalServiceTestHelper;
 import com.google.common.collect.ImmutableMap;
@@ -32,7 +34,13 @@ public abstract class BaseConfigurationTest<T extends Configuration> {
 	protected T configuration;
 	protected DatastoreService datastoreService;
 	protected Map<String, String> initialConfiguration = ImmutableMap
-				.<String, String> of("p1", "v1", "p2", "v2", "p3", "v3", "p4", "v4");
+				.<String, String> of(
+						"p1", "v1", 
+						"p2", "v2", 
+						"p3", "v3", 
+						"p4", "v4",
+						"p5", Strings.repeat("v", DatastoreConfiguration.STRING_MAX_LENGTH  + 1)
+						);
 
 	public BaseConfigurationTest() {
 		super();
@@ -62,11 +70,21 @@ public abstract class BaseConfigurationTest<T extends Configuration> {
 	protected void addConfiguration(String key, String value) {
 		Entity configurationEntity = new Entity(
 				DatastoreConfiguration.DEFAULT_ENTITY_KIND, key);
+		
 		configurationEntity.setUnindexedProperty(
-				DatastoreConfiguration.DEFAULT_PROPERTY_VALUE, value);
+				DatastoreConfiguration.DEFAULT_PROPERTY_VALUE, val(value));
+		
+		
 		datastoreService.put(configurationEntity);
 	}
 	
+	private Object val(String value) {
+		if (value.length() > 500) {
+			return new Text(value);
+		}
+		return value;
+	}
+
 	@Test
 	public void nonExistentPropertyShouldReturnNull() {
 		assertThat(configuration.getString("p10"), nullValue());
