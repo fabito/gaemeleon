@@ -21,7 +21,7 @@ public class MemcacheConfiguration extends AbstractConfiguration {
 	
 	private Configuration delegate;
 	private MemcacheService memcacheService;
-	private final static String DEFAULT_MEMCACHE_KEY_PREFIX = MemcacheConfiguration.class.getName() + "#";
+	private final static String DEFAULT_MEMCACHE_KEY_PREFIX = MemcacheConfiguration.class.getSimpleName() + "#";
 	private String memcacheKeyPrefix;
 
 	public MemcacheConfiguration(final Configuration delegate, final MemcacheService memcacheService) {
