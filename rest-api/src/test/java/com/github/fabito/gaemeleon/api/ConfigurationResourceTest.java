@@ -2,6 +2,7 @@ package com.github.fabito.gaemeleon.api;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
+import static org.hamcrest.core.IsNull.nullValue;
 
 import java.util.List;
 
@@ -58,9 +59,9 @@ public class ConfigurationResourceTest {
 	}
 
 	@Test
-	public void shouldReturnCreated() {
+	public void shouldReturnNoContent() {
 		Response r = resource.put(PROPERTY.getKey(), PROPERTY);
-		assertThat(r.getStatus(), is(Status.CREATED.getStatusCode()));
+		assertThat(r.getStatus(), is(Status.NO_CONTENT.getStatusCode()));
 		assertThat(configuration.getString(PROPERTY.getKey()), is(PROPERTY.getValue()));
 	}
 
@@ -72,6 +73,21 @@ public class ConfigurationResourceTest {
 		assertThat(configuration.getString(property2.getKey()), is(property2.getValue()));
 	}
 
+	@Test
+	public void shouldDelete() {
+		Property property2 = new Property("baseUrl", "www.fabito.com");
+		Response r = resource.post(property2);
+		assertThat(configuration.getString(property2.getKey()), is(property2.getValue()));
+		resource.delete(property2.getKey());
+		assertThat(configuration.getString(property2.getKey()), nullValue());
+	}
+	
+	@Test
+	public void deleteShouldReturnNotFound() {
+		Response r = resource.delete("nonExistentPropertyKey");
+		assertThat(r.getStatus(), is(Status.NOT_FOUND.getStatusCode()));
+	}
+	
 	@Test
 	public void postShould40X() {
 		Response r = resource.post(null);

@@ -61,7 +61,7 @@ public class BaseConfigurationResource {
 		if (configuration.containsKey(propertyName)) {
 			LOGGER.finer("config contains proeprty: " + propertyName);
 			configuration.setProperty(propertyName, property.getValue());
-			return Response.status(Status.CREATED).build();
+			return Response.noContent().build();
 		} else {
 			return Response.status(Status.NOT_FOUND).build();
 		}
@@ -75,7 +75,7 @@ public class BaseConfigurationResource {
 			return Response.status(Status.NOT_FOUND).build();
 		}
 		configuration.clearProperty(propertyName);
-		return Response.ok().build();
+		return Response.noContent().build();
 	}
 
 }
