@@ -73,7 +73,7 @@ repositories {
 ```
 ```groovy
 dependencies {
-    compile "com.github.fabito:gaemeleon-core:1.0"
+    compile "com.github.fabito:gaemeleon-core:0.6"
 }
 ```
 
@@ -96,6 +96,6 @@ dependencies {
 <dependency>
   <groupId>com.github.fabito</groupId>
   <artifactId>gaemeleon-core</artifactId>
-  <version>1.0</version>
+  <version>0.6</version>
 </dependency>
 ```
