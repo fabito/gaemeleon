@@ -15,14 +15,16 @@ import javax.ws.rs.core.Response.Status;
 
 import org.apache.commons.configuration.Configuration;
 
-public class BaseConfigurationResource {
+abstract class BaseConfigurationResource {
 
 	protected static final Logger LOGGER = Logger
 				.getLogger(ConfigurationResource.class.getSimpleName());
+	
 	protected Configuration configuration;
 
-	public BaseConfigurationResource() {
+	public BaseConfigurationResource(Configuration configuration) {
 		super();
+		this.configuration = configuration;
 	}
 
 	protected boolean isNullOrEmpty(String str) {

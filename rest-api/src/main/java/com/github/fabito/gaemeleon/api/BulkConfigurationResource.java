@@ -18,8 +18,7 @@ public class BulkConfigurationResource extends BaseConfigurationResource {
 
 	@Inject
 	public BulkConfigurationResource(Configuration configuration) {
-		super();
-		this.configuration = configuration;
+		super(configuration);
 	}
 	
 	private Response post(Property property) {

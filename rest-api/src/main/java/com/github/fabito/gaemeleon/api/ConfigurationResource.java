@@ -16,8 +16,7 @@ public class ConfigurationResource extends BaseConfigurationResource {
 
 	@Inject
 	public ConfigurationResource(Configuration configuration) {
-		super();
-		this.configuration = configuration;
+		super(configuration);
 	}
 
 	@POST
