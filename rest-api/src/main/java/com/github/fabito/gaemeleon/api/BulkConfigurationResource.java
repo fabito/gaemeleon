@@ -1,5 +1,7 @@
 package com.github.fabito.gaemeleon.api;
 
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.ws.rs.POST;
 import javax.ws.rs.core.Response;
@@ -8,19 +10,18 @@ import javax.ws.rs.core.Response.Status;
 import org.apache.commons.configuration.Configuration;
 
 /**
- * Exposes REST operations for general {@link Configuration} maitenenace.
+ * Exposes REST operations for general {@link Configuration} maintenance.
  * 
  * @author fabio
  */
-public class ConfigurationResource extends BaseConfigurationResource {
+public class BulkConfigurationResource extends BaseConfigurationResource {
 
 	@Inject
-	public ConfigurationResource(Configuration configuration) {
+	public BulkConfigurationResource(Configuration configuration) {
 		super(configuration);
 	}
-
-	@POST
-	public Response post(Property property) {
+	
+	private Response post(Property property) {
 		if (property == null || isNullOrEmpty(property.getKey())) {
 			return Response.status(Status.BAD_REQUEST).build();
 		}
@@ -28,4 +29,17 @@ public class ConfigurationResource extends BaseConfigurationResource {
 		configuration.addProperty(property.getKey(), property.getValue());
 		return Response.status(Status.CREATED).build();
 	}
+	
+	@POST
+	public Response post(List<Property> properties) {
+		if (properties == null || properties.isEmpty()) {
+			return Response.status(Status.BAD_REQUEST).build();
+		}
+		Response resp = null;
+		for (Property property : properties) {
+			resp = post(property);
+		}
+		return resp;
+	}
+
 }
