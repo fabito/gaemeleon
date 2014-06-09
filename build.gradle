@@ -17,7 +17,7 @@ subprojects {
 	apply plugin: 'coveralls'
 
     group = 'com.github.fabito'
-    version = '0.7'
+    version = '0.6'
 
 	def localMavenRepo = 'file://' + new File(System.getProperty('user.home'), '.m2/repository').absolutePath
 
