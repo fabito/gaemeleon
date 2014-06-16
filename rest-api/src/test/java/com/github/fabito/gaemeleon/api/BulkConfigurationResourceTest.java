@@ -14,7 +14,6 @@ import com.google.common.collect.Lists;
 
 public class BulkConfigurationResourceTest {
 
-	private static final Property PROPERTY = new Property("p1", "new v1");
 	private BulkConfigurationResource resource;
 	private PropertiesConfiguration configuration;
 	
@@ -41,10 +40,4 @@ public class BulkConfigurationResourceTest {
 		assertThat(r.getStatus(), is(Status.BAD_REQUEST.getStatusCode()));
 		
 	}
-	
-	private void assertProperty(Property p, String expectedKey, String expectedValue) {
-		assertThat(p.getKey(), is(expectedKey));
-		assertThat((String)p.getValue(), is(expectedValue));
-	}
-
 }

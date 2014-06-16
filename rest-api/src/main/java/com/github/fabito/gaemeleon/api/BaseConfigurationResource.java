@@ -5,17 +5,13 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.logging.Logger;
 
-import javax.ws.rs.DELETE;
-import javax.ws.rs.GET;
-import javax.ws.rs.PUT;
-import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 import org.apache.commons.configuration.Configuration;
 
-abstract class BaseConfigurationResource {
+public class BaseConfigurationResource {
 
 	protected static final Logger LOGGER = Logger
 				.getLogger(ConfigurationResource.class.getSimpleName());
@@ -31,7 +27,6 @@ abstract class BaseConfigurationResource {
 		return str == null || str.length() == 0;
 	}
 
-	@GET
 	public List<Property> listAll() {
 		List<Property> result = new ArrayList<>();
 		for (Iterator<String> iterator = configuration.getKeys(); iterator
@@ -42,8 +37,6 @@ abstract class BaseConfigurationResource {
 		return result;
 	}
 
-	@GET
-	@Path("/{propertyName}")
 	public Response get(@PathParam("propertyName") String propertyName) {
 		Object propertyValue = configuration.getProperty(propertyName);
 		if (propertyValue == null) {
@@ -53,8 +46,6 @@ abstract class BaseConfigurationResource {
 		return Response.ok(property).build();
 	}
 
-	@PUT
-	@Path("/{propertyName}")
 	public Response put(@PathParam("propertyName") String propertyName, Property property) {
 		if (property == null || isNullOrEmpty(property.getKey())) {
 			return Response.status(Status.BAD_REQUEST).build();
@@ -69,8 +60,6 @@ abstract class BaseConfigurationResource {
 		}
 	}
 
-	@DELETE
-	@Path("/{propertyName}")
 	public Response delete(@PathParam("propertyName") String propertyName) {
 		Object propertyValue = configuration.getProperty(propertyName);
 		if (propertyValue == null) {
@@ -79,5 +68,24 @@ abstract class BaseConfigurationResource {
 		configuration.clearProperty(propertyName);
 		return Response.noContent().build();
 	}
-
+	
+	public Response post(Property property) {
+		if (property == null || isNullOrEmpty(property.getKey())) {
+			return Response.status(Status.BAD_REQUEST).build();
+		}
+		LOGGER.finer("Got property = " + property);
+		configuration.addProperty(property.getKey(), property.getValue());
+		return Response.status(Status.CREATED).build();
+	}
+	
+	public Response post(List<Property> properties) {
+		if (properties == null || properties.isEmpty()) {
+			return Response.status(Status.BAD_REQUEST).build();
+		}
+		Response resp = null;
+		for (Property property : properties) {
+			resp = post(property);
+		}
+		return resp;		
+	}
 }

@@ -15,9 +15,9 @@ import org.junit.Test;
 
 public class ConfigurationResourceTest {
 
-	private static final Property PROPERTY = new Property("p1", "new v1");
-	private ConfigurationResource resource;
-	private PropertiesConfiguration configuration;
+	protected static final Property PROPERTY = new Property("p1", "new v1");
+	protected ConfigurationResource resource;
+	protected PropertiesConfiguration configuration;
 	
 	@Before
 	public void setup() throws Throwable {
@@ -76,7 +76,7 @@ public class ConfigurationResourceTest {
 	@Test
 	public void shouldDelete() {
 		Property property2 = new Property("baseUrl", "www.fabito.com");
-		Response r = resource.post(property2);
+		resource.post(property2);
 		assertThat(configuration.getString(property2.getKey()), is(property2.getValue()));
 		resource.delete(property2.getKey());
 		assertThat(configuration.getString(property2.getKey()), nullValue());
