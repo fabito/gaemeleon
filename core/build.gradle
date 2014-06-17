@@ -1,8 +1,10 @@
+version = '0.6.1'
+
 jar {
     baseName = 'gaemeleon-core'
 }
 
-def appengineSdkVersion = "1.9.0"
+def appengineSdkVersion = "1.9.5"
 
 dependencies {
     compile "com.google.appengine:appengine-api-1.0-sdk:${appengineSdkVersion}"
