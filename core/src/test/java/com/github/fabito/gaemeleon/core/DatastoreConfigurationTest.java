@@ -5,6 +5,7 @@ import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsNull.nullValue;
 
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 import org.junit.Test;
 
@@ -57,7 +58,18 @@ public class DatastoreConfigurationTest extends BaseConfigurationTest<DatastoreC
 		assertThat(configuration.getString("p1"), nullValue());
 	}
 	
+	@Test(expected=NoSuchElementException.class)
+	public void getPropertyWithThrowExceptionOnMissingFlagEnabled() {
+		configuration.setThrowExceptionOnMissing(true);
+		configuration.getString("NONONONON");
+	}
 
+	@Test
+	public void getStringWithThrowExceptionOnMissingFlagEnabled() {
+		configuration.setThrowExceptionOnMissing(true);
+		assertThat(configuration.getString("NONONONON", "teste"), is("teste"));
+	}
+	
 	@Override
 	Map<String, String> initialValues() {
 		return initialConfiguration;

@@ -3,7 +3,6 @@ package com.github.fabito.gaemeleon.core;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.logging.Logger;
 
 import javax.inject.Inject;
@@ -19,10 +18,10 @@ import com.google.appengine.api.datastore.EntityNotFoundException;
 import com.google.appengine.api.datastore.Key;
 import com.google.appengine.api.datastore.KeyFactory;
 import com.google.appengine.api.datastore.Query;
-import com.google.appengine.api.datastore.Text;
 import com.google.appengine.api.datastore.Query.Filter;
 import com.google.appengine.api.datastore.Query.FilterOperator;
 import com.google.appengine.api.datastore.Query.FilterPredicate;
+import com.google.appengine.api.datastore.Text;
 import com.google.appengine.api.datastore.Transaction;
 
 /**
@@ -97,9 +96,6 @@ public class DatastoreConfiguration extends AbstractConfiguration {
 			return value instanceof Text ? ((Text)value).getValue() : value;
 		} catch (final EntityNotFoundException e) {
 			LOGGER.finer("Property not found in datastore: " + key);
-			if (isThrowExceptionOnMissing()) {
-				throw new NoSuchElementException("key not found '" + key + "'");
-			}
 			return null;
 		}
 	}
