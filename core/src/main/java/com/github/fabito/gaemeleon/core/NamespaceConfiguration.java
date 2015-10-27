@@ -9,17 +9,17 @@ import org.apache.commons.configuration.Configuration;
 import com.google.appengine.api.NamespaceManager;
 
 /**
- * {@link Configuration} decorator which leverages {@link NamespaceManager} to enforce a specific namespace. 
+ * {@link Configuration} decorator which leverages {@link NamespaceManager} to enforce a specific namespace.
  *
  * By default the default namespace is enforced.
- * Useful for multi tenant application which needs configurations per tenant. 
- *  
+ * Useful for multi tenant application which needs configurations per tenant.
+ *
  * @author fabio
   */
 public class NamespaceConfiguration extends AbstractConfiguration {
 
 	private static final Logger LOGGER = Logger.getLogger(NamespaceConfiguration.class.getSimpleName());
-	
+
 	private Configuration decorated;
 	private String namespace = null;
 
@@ -68,7 +68,7 @@ public class NamespaceConfiguration extends AbstractConfiguration {
 			public Iterator<String> run() {
 				return decorated.getKeys();
 			}
-		});		
+		});
 	}
 
 	@Override
@@ -80,7 +80,7 @@ public class NamespaceConfiguration extends AbstractConfiguration {
 			}
 		});
 	}
-	
+
 	@Override
 	protected void clearPropertyDirect(final String key) {
 		withinNamespace(namespace, new VoidWork() {
@@ -90,11 +90,11 @@ public class NamespaceConfiguration extends AbstractConfiguration {
 			}
 		});
 	}
-	
-	static interface Work<T> {
-		public T run();
+
+	interface Work<T> {
+		T run();
 	}
-	
+
 	static abstract class VoidWork implements Work<Void> {
 		@Override
 		public Void run() {
@@ -103,15 +103,14 @@ public class NamespaceConfiguration extends AbstractConfiguration {
 		}
 		abstract void vrun();
 	}
- 	
+
 	public static <R> R withinNamespace(String namespace, Work<R> work) {
 		String oldNamespace = NamespaceManager.get();
 		LOGGER.finer("Backing up old namespace: " + oldNamespace);
 		LOGGER.finer("Setting namespace to: " + namespace);
 		NamespaceManager.set(namespace);
 		try {
-			R r = work.run();
-			return r;
+			return work.run();
 		} finally {
 			LOGGER.finer("Restoring old namespace: " + oldNamespace);
 			NamespaceManager.set(oldNamespace);
