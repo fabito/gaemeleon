@@ -14,11 +14,15 @@ import java.util.concurrent.ExecutionException;
 
 public class CachingConfiguration extends AbstractConfiguration {
 
-    private Cache<String, Object> cache = CacheBuilder.newBuilder().build();
-    private Configuration delegate;
+    private final Cache<String, Object> cache;
+    private final Configuration delegate;
 
     public CachingConfiguration(Configuration delegate) {
         this.delegate = Preconditions.checkNotNull(delegate);
+        this.cache = CacheBuilder.newBuilder()
+                // TODO externalize expiration setting
+                // TODO externalize eager loading strategy setting
+                .build();
     }
 
     @Override
