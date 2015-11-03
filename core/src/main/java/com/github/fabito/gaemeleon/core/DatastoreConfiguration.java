@@ -46,9 +46,9 @@ public class DatastoreConfiguration extends AbstractConfiguration {
 	public static final String DEFAULT_ENTITY_KIND = "Configuration";
 	public static final String DEFAULT_PROPERTY_VALUE = "value";
 
-	private final DatastoreService datastoreService;
-	private final String entityKind;
-	private final String propertyValue; 
+	protected final DatastoreService datastoreService;
+	protected final String entityKind;
+	protected final String propertyValue;
 
 	public DatastoreConfiguration() {
 		this(DatastoreServiceFactory.getDatastoreService(), DEFAULT_ENTITY_KIND, DEFAULT_PROPERTY_VALUE);
@@ -79,12 +79,15 @@ public class DatastoreConfiguration extends AbstractConfiguration {
 
 	@Override
 	public Iterator<String> getKeys() {
-		final Iterable<Entity> iterable = datastoreService.prepare(new Query(entityKind).setKeysOnly()).asIterable();
 		final List<String> list = new LinkedList<String>();
-		for (final Entity entity : iterable) {
+		for (final Entity entity : allKeys()) {
 			list.add(entity.getKey().getName());
 		}
 		return list.iterator();
+	}
+
+	protected Iterable<Entity> allKeys() {
+		return datastoreService.prepare(new Query(entityKind).setKeysOnly()).asIterable();
 	}
 
 	@Override
