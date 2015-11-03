@@ -6,8 +6,7 @@ import org.junit.Test;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 public class CachingConfigurationTest {
 
@@ -17,7 +16,7 @@ public class CachingConfigurationTest {
     @Before
     public void setup() {
         config = new CachingConfiguration(delegate);
-        when(delegate.getProperty("p2")).thenReturn("v2");
+        when(delegate.getProperty("p2")).thenReturn("1");
         when(delegate.getProperty("p3")).thenReturn("v3");
         when(delegate.getProperty("p4")).thenReturn("v4");
     }
@@ -25,9 +24,15 @@ public class CachingConfigurationTest {
     @Test
     public void shouldAddItemsToCache() {
         config.getString("p2");
+        config.getLong("p2");
         config.getString("p3");
         config.getString("p4");
+
+
         assertThat(config.getCache().size(), is(3l));
+
+        verify(delegate, times(1)).getProperty("p2");
+
     }
 
 }
